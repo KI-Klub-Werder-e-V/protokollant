@@ -129,6 +129,19 @@ def test_person_who_left_no_longer_blocks(conn):
     assert state(conn, mid) == "recording"
 
 
+def test_leaving_requires_reconfirmed_list(conn, tmp_path):
+    mid, _ = ready(conn)
+    m.start_recording(conn, ACTOR, mid)
+    m.pause_recording(conn, ACTOR, mid)
+    late = m.add_participant(conn, ACTOR, mid, "Nein")
+    m.record_consent(conn, ACTOR, late, "no", TEXT)
+    m.participant_left(conn, ACTOR, late)
+    with pytest.raises(m.ConsentMissing):
+        m.start_recording(conn, ACTOR, mid)
+    m.confirm_attendance(conn, ACTOR, mid)
+    m.start_recording(conn, ACTOR, mid)
+
+
 def test_no_record_item_pauses_and_blocks_resume(conn):
     mid = meeting(conn, [{"title": "Offen"}, {"title": "Personal", "no_record": True}])
     p = m.add_participant(conn, ACTOR, mid, "Anna")

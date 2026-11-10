@@ -207,8 +207,15 @@ def add_participant(
 
 
 def participant_left(conn: sqlite3.Connection, actor: str, participant_id: str) -> None:
+    """Someone leaving can lift a refusal, so the list must be confirmed again before recording."""
     with tx(conn):
+        p = conn.execute("select meeting_id from participant where id = ?", (participant_id,)).fetchone()
+        if p is None:
+            raise KeyError(participant_id)
         conn.execute("update participant set left_at = ? where id = ?", (_now(), participant_id))
+        conn.execute(
+            "update meeting set attendance_confirmed_at = null where id = ?", (p["meeting_id"],)
+        )
         _audit(conn, actor, "participant.left", "participant", participant_id)
 
 
