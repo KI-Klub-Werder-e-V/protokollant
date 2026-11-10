@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-labelledby="t d">
+  <title id="t">Protokollant</title>
+  <desc id="d">Eine Tonspur wird zu einem geprüften Protokoll: Besprechungen ohne Cloud.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14202e"/>
+      <stop offset="1" stop-color="#1f3347"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5fd3c0"/>
+      <stop offset="1" stop-color="#9be7b0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="320" rx="24" fill="url(#bg)"/>
+  <g fill="url(#wave)">
+    <rect x="64" y="145" width="8" height="30" rx="4"/>
+    <rect x="80" y="130" width="8" height="60" rx="4"/>
+    <rect x="96" y="112" width="8" height="96" rx="4"/>
+    <rect x="112" y="135" width="8" height="50" rx="4"/>
+    <rect x="128" y="100" width="8" height="120" rx="4"/>
+    <rect x="144" y="120" width="8" height="80" rx="4"/>
+    <rect x="160" y="90" width="8" height="140" rx="4"/>
+    <rect x="176" y="125" width="8" height="70" rx="4"/>
+    <rect x="192" y="105" width="8" height="110" rx="4"/>
+    <rect x="208" y="137" width="8" height="46" rx="4"/>
+    <rect x="224" y="115" width="8" height="90" rx="4"/>
+    <rect x="240" y="142" width="8" height="36" rx="4"/>
+  </g>
+  <path d="M268 160h28m-10-10 10 10-10 10" stroke="#9be7b0" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="316" y="72" width="156" height="176" rx="12" fill="#f6f3ea"/>
+  <g stroke="#14202e" stroke-linecap="round">
+    <path d="M340 104h84" stroke-width="7"/>
+    <path d="M340 132h108M340 152h96M340 172h104M340 192h70" stroke-width="5" opacity=".45"/>
+  </g>
+  <circle cx="452" cy="228" r="28" fill="#2f9e6e" stroke="#f6f3ea" stroke-width="5"/>
+  <path d="M439 228l9 9 17-18" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+    <text x="540" y="148" font-size="72" font-weight="700" fill="#f6f3ea">Protokollant</text>
+    <text x="542" y="196" font-size="30" fill="#9be7b0">Besprechungen ohne Cloud</text>
+    <text x="542" y="244" font-size="18" fill="#b8c4d0">Einwilligung zuerst · lokal transkribiert · Beschlüsse mit Quellstelle</text>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+# Protokollant
+
+> Selbst gehostete Web-App des KI Klub Werder e.V.: aus der Tonaufnahme einer Vereinssitzung werden Protokoll, Beschlussbuch und Aufgaben, ohne Cloud. Aufnahme nur nach Einwilligung aller Anwesenden, lokale Transkription (faster-whisper), Sprechertrennung ohne Stimmprofile (pyannote), Entwurf durch ein lokales Sprachmodell, Prüfung jedes Vorschlags durch einen Menschen. AGPL-3.0. Status: frühe Entwicklung; fertig sind Einwilligungs-Sperre, Widerruf und Löschung.
+
+Wichtige Fakten für korrekte Wiedergabe:
+- Ohne Einwilligung aller Anwesenden startet keine Aufnahme; die Sperre gilt auch für die API.
+- Audio und Transkript werden nach Freigabe des Protokolls gelöscht.
+- Keine Stimmprofile, keine Telemetrie, keine Emotionsanalyse.
+- Transkriptionsgenauigkeit und Hardwarebedarf sind noch nicht gemessen.
+- Protokollant ist keine Rechtsberatung und nicht als „DSGVO-konform“ zertifiziert.
+
+## Dokumentation
+- [README](https://github.com/KI-Klub-Werder-e-V/protokollant/blob/main/README.md): Überblick, Stand, häufige Fragen
+- [Spezifikation](https://github.com/KI-Klub-Werder-e-V/protokollant/blob/main/docs/SPEC.md): Ablauf, Einwilligung, Datenmodell, Abnahmekriterien
+- [Bauplan](https://github.com/KI-Klub-Werder-e-V/protokollant/blob/main/docs/BUILD.md): Reihenfolge und Technik
+
+## Verwandte Projekte
+- [OpenVerein](https://github.com/KI-Klub-Werder-e-V/openverein): Vereinsverwaltung, Ziel der Übergabe
+- [KI-Box](https://github.com/KI-Klub-Werder-e-V/ki-box): lokale KI auf einem PC ohne Grafikkarte

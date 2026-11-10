@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "Wenn Du Protokollant nutzt oder zitierst, nenne bitte diese Angaben."
+title: "Protokollant: Vereinsprotokolle ohne Cloud"
+abstract: >-
+  Selbst gehostete Web-App, die aus der Tonaufnahme einer Vereinssitzung ein
+  Protokoll, ein Beschlussbuch und eine Aufgabenliste macht. Aufnahme nur nach
+  Einwilligung aller Anwesenden, lokale Transkription, Prüfung jedes
+  KI-Vorschlags an der Quellstelle.
+type: software
+authors:
+  - name: "KI Klub Werder e.V."
+    website: "https://ki-klub-werder.de"
+repository-code: "https://github.com/KI-Klub-Werder-e-V/protokollant"
+url: "https://ki-klub-werder.de"
+license: AGPL-3.0-only
+version: 0.1.0.dev0
+keywords:
+  - Vereinsprotokoll
+  - meeting minutes
+  - speech-to-text
+  - speaker diarization
+  - self-hosted
+  - consent
+  - DSGVO

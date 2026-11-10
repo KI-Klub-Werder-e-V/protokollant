@@ -1,0 +1,38 @@
+name: Fehlerbericht
+description: Etwas funktioniert nicht wie erwartet.
+title: "[Fehler]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke, dass Du einen Fehler meldest! Sicherheitslücken bitte **nicht** hier, sondern vertraulich wie in [SECURITY.md](https://github.com/KI-Klub-Werder-e-V/protokollant/blob/main/SECURITY.md) beschrieben.
+        **Bitte lade keine echten Aufnahmen, Transkripte oder Namen hoch.**
+  - type: textarea
+    id: beschreibung
+    attributes:
+      label: Was ist passiert?
+    validations:
+      required: true
+  - type: textarea
+    id: schritte
+    attributes:
+      label: Schritte zum Nachstellen
+    validations:
+      required: true
+  - type: textarea
+    id: erwartet
+    attributes:
+      label: Was hast Du erwartet?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version oder Commit
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs oder Fehlermeldungen
+      description: Bitte vorher Namen und Gesprächsinhalte entfernen.
+      render: shell

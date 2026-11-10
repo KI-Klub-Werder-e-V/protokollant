@@ -1,0 +1,25 @@
+name: Funktionswunsch
+description: Eine Idee, was Protokollant besser machen sollte.
+title: "[Wunsch]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Welches Problem hast Du in Euren Sitzungen?
+    validations:
+      required: true
+  - type: textarea
+    id: vorschlag
+    attributes:
+      label: Wie könnte Protokollant helfen?
+  - type: dropdown
+    id: art
+    attributes:
+      label: Art der Sitzung
+      options:
+        - Vorstandssitzung
+        - Mitgliederversammlung
+        - Gremium oder Ausschuss
+        - Betrieb oder Team
+        - Sonstiges
