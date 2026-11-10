@@ -173,6 +173,47 @@ def test_revoke_from_time_keeps_earlier_chunks(conn, tmp_path):
     assert not m.chunk_path(tmp_path, mid, rec, 1).exists()
 
 
+def test_yes_after_no_does_not_unlock(conn, tmp_path):
+    mid, _ = ready(conn)
+    rec = m.start_recording(conn, ACTOR, mid)
+    m.accept_chunk(conn, tmp_path, rec, 0, b"x")
+    late = m.add_participant(conn, ACTOR, mid, "Nein")
+    m.record_consent(conn, ACTOR, late, "no", TEXT)
+    m.record_consent(conn, ACTOR, late, "yes", TEXT)
+    m.confirm_attendance(conn, ACTOR, mid)
+    with pytest.raises(m.ConsentMissing):
+        m.start_recording(conn, ACTOR, mid)
+
+
+def test_yes_after_revoke_does_not_unlock(conn, tmp_path):
+    mid, people = ready(conn)
+    m.start_recording(conn, ACTOR, mid)
+    m.revoke(conn, tmp_path, ACTOR, people[0], TEXT)
+    m.record_consent(conn, ACTOR, people[0], "yes", TEXT)
+    with pytest.raises(m.ConsentMissing):
+        m.start_recording(conn, ACTOR, mid)
+
+
+def test_revocation_blocks_upload_attestation(conn, tmp_path):
+    mid = meeting(conn)
+    p = m.add_participant(conn, ACTOR, mid, "Anna")
+    m.record_consent(conn, ACTOR, p, "yes", TEXT)
+    m.revoke(conn, tmp_path, ACTOR, p, TEXT)
+    m.confirm_attendance(conn, ACTOR, mid)
+    with pytest.raises(m.ConsentMissing):
+        m.attest_upload(conn, ACTOR, mid, attested=True, consent_text=TEXT)
+
+
+def test_revoke_deletes_derived_work_files(conn, tmp_path):
+    mid, people = ready(conn)
+    rec = m.start_recording(conn, ACTOR, mid)
+    m.accept_chunk(conn, tmp_path, rec, 0, b"x")
+    (tmp_path / "work" / mid).mkdir(parents=True)
+    (tmp_path / "work" / mid / "n.wav").write_bytes(b"x")
+    m.revoke(conn, tmp_path, ACTOR, people[0], TEXT, delete_all=True)
+    assert not (tmp_path / "work" / mid).exists()
+
+
 def test_upload_requires_attestation(conn):
     mid = meeting(conn)
     m.add_participant(conn, ACTOR, mid, "Anna")

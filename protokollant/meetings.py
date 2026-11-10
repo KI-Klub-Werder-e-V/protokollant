@@ -86,6 +86,21 @@ def _latest_consent(conn: sqlite3.Connection, participant_id: str) -> str | None
     return row["type"] if row else None
 
 
+def _any_refused(conn: sqlite3.Connection, present: list[sqlite3.Row]) -> bool:
+    """A no or a revocation by someone still present blocks this meeting for good, whatever came after."""
+    ids = [p["id"] for p in present]
+    if not ids:
+        return False
+    marks = ",".join("?" * len(ids))
+    return (
+        conn.execute(
+            f"select 1 from consent_event where type in ('no','revoked') and participant_id in ({marks})",
+            ids,
+        ).fetchone()
+        is not None
+    )
+
+
 def _store_text(conn: sqlite3.Connection, body: str) -> str:
     digest = hashlib.sha256(body.encode()).hexdigest()
     conn.execute(
@@ -112,6 +127,8 @@ def _assert_may_record(conn: sqlite3.Connection, m: sqlite3.Row) -> None:
     present = _present(conn, m["id"])
     if not present:
         raise ConsentMissing("Es sind keine Anwesenden eingetragen.")
+    if _any_refused(conn, present):
+        raise ConsentMissing("Eine anwesende Person hat abgelehnt oder widerrufen.")
     if any(_latest_consent(conn, p["id"]) != "yes" for p in present):
         raise ConsentMissing("Es haben noch nicht alle Anwesenden eingewilligt.")
     if m["current_item_id"]:
@@ -338,6 +355,8 @@ def attest_upload(
         present = _present(conn, meeting_id)
         if not present:
             raise ConsentMissing("Es sind keine Anwesenden eingetragen.")
+        if _any_refused(conn, present):
+            raise ConsentMissing("Eine anwesende Person hat abgelehnt oder widerrufen.")
         digest = _store_text(conn, consent_text)
         for p in present:
             _event(conn, p["id"], "attested", actor, digest)
@@ -379,6 +398,9 @@ def revoke(
         _audit(conn, actor, "consent.revoked", "participant", participant_id)
     for path in doomed:
         path.unlink(missing_ok=True)
+    if delete_all or delete_from:
+        # Derived files (normalised audio, model input) contain the deleted speech; the worker rebuilds them.
+        shutil.rmtree(data_dir / "work" / meeting_id, ignore_errors=True)
 
 
 def _delete_after(
